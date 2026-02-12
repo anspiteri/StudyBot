@@ -20,5 +20,16 @@ study-automation-tool/
             ├── summariser.py
             └── card_generator.py
 ```
+
+# Development
+1. Setup virtual environment for environment isolation: `python -m venv .venv`
+2. Activate virtual environment: `source .venv/bin/activate` (Linux)
+3. Install project executable & dependencies: `pip install -e .` ('e' - for editable, sources from `src` files.)
+
 ## Usage
 In command line type: `study`
+
+## Future Build Options
+1. `pip install .` - copies project to `.venv` site packages
+2. `python -m build` - builds a "wheel"
+3. Create a binary using `pyinstaller`, `pex`, or `shiv`
