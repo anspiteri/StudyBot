@@ -34,6 +34,11 @@ def input_file_argument(f):
 
 @click.group()
 def main():
+    """
+    This is a study automation tool. 
+
+    Takes input in the form of .pdf, and outputs in markdown or json syntax as text to stdout.
+    """
     # Perform any globally required operations here, like loading stored config.
 
     click.echo("This is a study automation tool.")
@@ -43,7 +48,7 @@ def main():
 @input_file_argument
 def parse(input_file: str):
     """
-    Parses a pdf document into structured json and outputs to stdout.
+    Parses a pdf document into structured json.
     """
     # do unique parse checks & call parse module
     click.echo("Entered PARSE mode.")
@@ -59,9 +64,11 @@ def config():
 
 @main.group
 def generate():
-    # TODO: When 'generate' is specified alone, make the app error and show help.
+    """
+    Parses a pdf file into a specified output.
+    """
     client: LLMClient
-
+    click.echo("Hi, this is generate.")
     # Prototype
     client = create_llm_client("gemini", 'gemini-3-flash-preview')
     if client is not None:
@@ -78,7 +85,7 @@ def generate():
 @input_file_argument
 def summary(input_file: str):
     """
-    Parses a pdf file and generates a concise summary in markdown and outputted to stdout.
+    Output a concise summary in markdown syntax.
     """
     # do unique checks & call summary module
     click.echo("Entered SUMMARY mode.")
@@ -88,7 +95,7 @@ def summary(input_file: str):
 @input_file_argument
 def cards(input_file: str):
     """
-    Parses a pdf file and generates anki cards in markdown outputted to stdout.
+    Outout anki cards in markdown syntax.
     """
     # do unique checks & call cards module
     click.echo("Entered CARDS mode.")
