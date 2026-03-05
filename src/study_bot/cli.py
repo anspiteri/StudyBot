@@ -2,6 +2,7 @@ import os, enum
 import click
 from dotenv import load_dotenv
 # import core modules here
+from study_bot.core.pdf_parser import parse_pdf
 from study_bot.llm.base import LLMClient
 from study_bot.llm.gemini_client import GeminiClient
 
@@ -26,7 +27,7 @@ def create_llm_client(provider:str, model: str) -> LLMClient:
 
 def input_file_argument(f):
     return click.argument(
-        'filename',
+        'input_file',
         type=click.Path(exists=True, dir_okay=False, readable=True),
         nargs=1
     )(f)
@@ -41,8 +42,6 @@ def main():
     """
     # Perform any globally required operations here, like loading stored config.
 
-    click.echo("This is a study automation tool.")
-
 
 @main.command()
 @input_file_argument
@@ -50,8 +49,13 @@ def parse(input_file: str):
     """
     Parses a pdf document into structured json.
     """
-    # do unique parse checks & call parse module
-    click.echo("Entered PARSE mode.")
+    try:
+        json_text = parse_pdf(input_file)
+    except (ValueError, FileNotFoundError, RuntimeError) as e:
+        click.echo(f"Error: {e}", err=True)
+        raise click.Abort()
+    else:
+        click.echo(json_text)
 
 
 @main.command()
